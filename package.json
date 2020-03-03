@@ -1,0 +1,9 @@
+{
+  "name": "blink",
+  "version": "0.0.1",
+  "scripts": [ "blink.sh" ],
+  "install": "make install",
+  "dependencies": {
+    "term": "0.0.1"
+  }
+}
