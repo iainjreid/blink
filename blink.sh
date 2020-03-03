@@ -1,7 +1,5 @@
 #!/bin/bash
 
-. deps/term/term.sh
-
 read -r -d "" usage <<EOM
 Usage: blink
 TODO: Write me!
@@ -55,23 +53,12 @@ open() {
 
   echo "${width}x${height}" > ${1}/dimensions
 
-  tail -f ${1}/history | while read line; do
-    out=""
-
-    for char in ${line//,/ }; do
-      case $char in
-        0)
-          out="${out}‏‏‎  " ;;
-        1)
-          out="${out}██" ;;
-        *)
-          exit 1;
-      esac
-    done
-
-    term_move 0 $((( $_y + 1 ) % $height))
-    term_write "$out"
-  done
+  tail -f ${1}/history | awk '{
+    gsub("0", "  ");
+    gsub("1", "██");
+    gsub(",", "");
+    print
+  }'
 }
 
 while [[ $# > 0 ]]; do
